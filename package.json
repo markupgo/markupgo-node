@@ -1,0 +1,84 @@
+{
+  "name": "@markupgo/node",
+  "private": false,
+  "version": "1.0.0",
+  "description": "PDF & Image conversion API for developers",
+  "bugs": {
+    "url": "https://github.com/markupgo/markupgo-node/issues"
+  },
+  "homepage": "https://github.com/markupgo/markupgo-node#readme",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "start": "node dist/src/playground/index.js",
+    "build": "tsup",
+    "typecheck": "tsc --noemit",
+    "lint": "eslint --ignore-path .gitignore --ext .ts src --fix && npm run typecheck",
+    "start:dev": "tsx watch --tsconfig tsconfig.json src/playground/index.ts"
+  },
+  "author": "hello@markupgo.com",
+  "keywords": [
+    "markup to image",
+    "markup to pdf",
+    "image screenshot",
+    "image rendering",
+    "image conversion",
+    "pdf rendering",
+    "pdf conversion",
+    "markup to image service",
+    "markup to pdf service",
+    "image rendering service",
+    "image conversion service",
+    "pdf rendering service",
+    "pdf conversion service",
+    "markup to image saas",
+    "markup to pdf saas",
+    "image rendering saas",
+    "image conversion saas",
+    "pdf rendering saas",
+    "pdf conversion saas",
+    "markup to image generating",
+    "markup to pdf generating",
+    "image rendering generating",
+    "image conversion generating",
+    "pdf rendering generating",
+    "pdf conversion generating",
+    "markup to image rendering",
+    "markup to pdf rendering",
+    "markup to image conversion",
+    "markup to pdf conversion",
+    "screenshot to pdf",
+    "headless browser",
+    "chrome headless",
+    "puppeteer automation",
+    "phantomjs tool",
+    "url capture",
+    "url to png",
+    "url to jpeg",
+    "url to pdf",
+    "url2png auto height",
+    "url capture fullscreen",
+    "png rendering",
+    "jpeg rendering",
+    "png conversion",
+    "jpeg conversion"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "@swc/core": "^1.6.5",
+    "ofetch": "^1.3.4",
+    "tsup": "^8.1.0",
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9"
+  }
+}
