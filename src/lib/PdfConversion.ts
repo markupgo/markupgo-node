@@ -2,7 +2,7 @@ import { API_URL } from 'contants';
 import { $Fetch, ofetch } from 'ofetch';
 import { ITask, Libraries } from 'types';
 
-type Cookie = {
+export type Cookie = {
   name: string;
   value: string;
   domain: string;
@@ -12,19 +12,19 @@ type Cookie = {
   sameSite?: 'Strict' | 'Lax' | 'None';
 }
 
-type Size = {
+export type Size = {
   width: number;
   height: number;
 }
 
-type Margins = {
+export type Margins = {
   top: number;
   bottom: number;
   left: number;
   right: number;
 }
 
-type Properties = {
+export type PdfProperties = {
   singlePage?: boolean;
   size?: Size;
   margins?: Margins;
@@ -39,9 +39,9 @@ type Properties = {
   };
 }
 
-type PdfOptions = {
+export type PdfOptions = {
   header?: string;
-  properties?: Properties;
+  properties?: PdfProperties;
   pdfUA?: boolean;
   emulatedMediaType?: 'screen' | 'print';
   waitDelay?: string;
@@ -55,7 +55,7 @@ type PdfOptions = {
   cookies?: Cookie[];
 }
 
-type TemplateData = {
+export type TemplateData = {
   id: string;
   context?: Record<string, any>;
   html?: string;

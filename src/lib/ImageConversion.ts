@@ -2,7 +2,7 @@ import { API_URL } from 'contants';
 import { $Fetch, ofetch } from 'ofetch';
 import { ITask, Libraries } from 'types';
 
-type Properties = {
+export type ImageProperties = {
   format?: 'png' | 'jpeg' | 'webp';
   quality?: number;
   omitBackground?: boolean;
@@ -11,10 +11,10 @@ type Properties = {
   clip?: boolean;
 }
 
-type ImageOptions = {
+export type ImageOptions = {
   header?: string;
   footer?: string;
-  properties?: Properties;
+  properties?: ImageProperties;
   emulatedMediaType?: 'screen' | 'print';
   waitDelay?: string;
   waitForExpression?: string;
@@ -25,7 +25,7 @@ type ImageOptions = {
   optimizeForSpeed?: boolean;
 }
 
-type TemplateData = {
+export type TemplateData = {
   id: string;
   context?: Record<string, any>;
   html?: string;
