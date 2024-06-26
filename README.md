@@ -4,8 +4,6 @@ Node client for the [MarkupGo API](https://markupgo.com/).
 
 It provides methods to generate images and PDFs from templates, URLs, or HTML.
 
-Please see the [MarkupGo API Documentation](https://markupgo.com/docs) for more information.
-
 ## Installation
 
 To install the library, use npm or yarn:
@@ -20,197 +18,221 @@ or
 yarn add markupgo-node
 ```
 
-## Usage
-
-### Initialization
+## Initialization
 
 To use `MarkupGo`, you need to initialize it with your API key:
 
 ```typescript
-import MarkupGo from 'markupgo-node';
+import MarkupGo from "markupgo-node";
 
-const markupgo = new MarkupGo({
-    API_KEY: 'your_api_key_here'
+const markupGo = new MarkupGo({
+  API_KEY: "your_api_key_here",
 });
 ```
 
-### Overview of Classes
+## Overview of Classes
 
 - **ImageConversion**
   - Provides methods to generate images from templates, URLs, or HTML strings.
 - **PdfConversion**
   - Provides methods to generate PDFs from templates, URLs, or HTML strings.
 
-### Response Types
+## Response Types
 
 - **ITask**
   - Represents the task details and includes information such as ID, URL, format, size, width, and height.
 - **Buffer**
   - Used to handle raw binary data for image or PDF output.
 
-### Image Conversion
+## Image Conversion Methods
 
-#### Methods
+### fromTemplate
 
-1. **fromTemplate**
+```typescript
+import * as fs from "fs";
 
-    ```typescript
-    import * as fs from 'fs';
+const templateData: TemplateData = {
+  id: "template-id",
+  context: { key: "value" },
+  html: "<html><body>Hello World</body></html>",
+  css: "body { color: red; }",
+  libraries: {
+    js: [],
+    css: [],
+  },
+};
 
-    const templateData: TemplateData = {
-        id: 'template-id',
-        context: { key: 'value' },
-        html: '<html><body>Hello World</body></html>',
-        css: 'body { color: red; }',
-        libraries: {
-            js: [],
-            css: []
-        }
-    };
+const imageOptions: ImageOptions = {
+  format: "png",
+  width: 800,
+  height: 600,
+};
 
-    const imageOptions: ImageOptions = {
-        format: 'png',
-        width: 800,
-        height: 600
-    };
+markupGo.image
+  .fromTemplate(templateData, imageOptions)
+  .json()
+  .then((task) => {
+    console.log(task);
+  });
 
-    markupgo.image.fromTemplate(templateData, imageOptions).json().then((task) => {
-        console.log(task);
-    });
+markupGo.image
+  .fromTemplate(templateData, imageOptions)
+  .buffer()
+  .then((buffer) => {
+    fs.writeFileSync("output.png", Buffer.from(buffer));
+  });
+```
 
-    markupgo.image.fromTemplate(templateData, imageOptions).buffer().then((buffer) => {
-        fs.writeFileSync('output.png', Buffer.from(buffer));
-    });
-    ```
+### fromUrl
 
-2. **fromUrl**
+```typescript
+import * as fs from "fs";
 
-    ```typescript
-    import * as fs from 'fs';
+const url: string = "https://example.com";
 
-    const url: string = 'https://example.com';
+const imageOptions: ImageOptions = {
+  format: "jpeg",
+  width: 800,
+  height: 600,
+};
 
-    const imageOptions: ImageOptions = {
-        format: 'jpeg',
-        width: 800,
-        height: 600
-    };
+markupGo.image.fromUrl(url, imageOptions).json().then((task) => {
+  console.log(task);
+});
 
-    markupgo.image.fromUrl(url, imageOptions).json().then((task) => {
-        console.log(task);
-    });
+markupGo.image.fromUrl(url, imageOptions).buffer().then((buffer) => {
+  fs.writeFileSync("output.jpg", Buffer.from(buffer));
+});
+```
 
-    markupgo.image.fromUrl(url, imageOptions).buffer().then((buffer) => {
-        fs.writeFileSync('output.jpg', Buffer.from(buffer));
-    });
-    ```
+### fromHtml
 
-3. **fromHtml**
+```typescript
+import * as fs from "fs";
 
-    ```typescript
-    import * as fs from 'fs';
+const html: string = "<html><body>Hello World</body></html>";
 
-    const html: string = '<html><body>Hello World</body></html>';
+const imageOptions: ImageOptions = {
+  format: "webp",
+  width: 800,
+  height: 600,
+};
 
-    const imageOptions: ImageOptions = {
-        format: 'webp',
-        width: 800,
-        height: 600
-    };
+markupGo.image
+  .fromHtml(html, imageOptions)
+  .json()
+  .then((task) => {
+    console.log(task);
+  });
 
-    markupgo.image.fromHtml(html, imageOptions).json().then((task) => {
-        console.log(task);
-    });
+markupGo.image
+  .fromHtml(html, imageOptions)
+  .buffer()
+  .then((buffer) => {
+    fs.writeFileSync("output.webp", Buffer.from(buffer));
+  });
+```
 
-    markupgo.image.fromHtml(html, imageOptions).buffer().then((buffer) => {
-        fs.writeFileSync('output.webp', Buffer.from(buffer));
-    });
-    ```
+## PDF Conversion Methods
 
-### PDF Conversion
+### fromTemplate
 
-#### Methods
+```typescript
+import * as fs from "fs";
 
-1. **fromTemplate**
+const templateData: TemplateData = {
+  id: "template-id",
+  context: { key: "value" },
+  html: "<html><body>Hello World</body></html>",
+  css: "body { color: red; }",
+  libraries: {
+    js: [],
+    css: [],
+  },
+};
 
-    ```typescript
-    import * as fs from 'fs';
+const pdfOptions: PdfOptions = {
+  header: "<div>Header</div>",
+  properties: {
+    printBackground: true,
+    landscape: true,
+  },
+};
 
-    const templateData: TemplateData = {
-        id: 'template-id',
-        context: { key: 'value' },
-        html: '<html><body>Hello World</body></html>',
-        css: 'body { color: red; }',
-        libraries: {
-            js: [],
-            css: []
-        }
-    };
+markupGo.pdf
+  .fromTemplate(templateData, pdfOptions)
+  .json()
+  .then((task) => {
+    console.log(task);
+  });
 
-    const pdfOptions: PdfOptions = {
-        header: '<div>Header</div>',
-        properties: {
-            printBackground: true,
-            landscape: true
-        }
-    };
+markupGo.pdf
+  .fromTemplate(templateData, pdfOptions)
+  .buffer()
+  .then((buffer) => {
+    fs.writeFileSync("output.pdf", Buffer.from(buffer));
+  });
+```
 
-    markupgo.pdf.fromTemplate(templateData, pdfOptions).json().then((task) => {
-        console.log(task);
-    });
+### fromUrl
 
-    markupgo.pdf.fromTemplate(templateData, pdfOptions).buffer().then((buffer) => {
-        fs.writeFileSync('output.pdf', Buffer.from(buffer));
-    });
-    ```
+```typescript
+import * as fs from "fs";
 
-2. **fromUrl**
+const url: string = "https://example.com";
 
-    ```typescript
-    import * as fs from 'fs';
+const pdfOptions: PdfOptions = {
+  header: "<div>Header</div>",
+  properties: {
+    printBackground: true,
+    landscape: true,
+  },
+};
 
-    const url: string = 'https://example.com';
+markupGo.pdf
+  .fromUrl(url, pdfOptions)
+  .json()
+  .then((task) => {
+    console.log(task);
+  });
 
-    const pdfOptions: PdfOptions = {
-        header: '<div>Header</div>',
-        properties: {
-            printBackground: true,
-            landscape: true
-        }
-    };
+markupGo.pdf
+  .fromUrl(url, pdfOptions)
+  .buffer()
+  .then((buffer) => {
+    fs.writeFileSync("output.pdf", Buffer.from(buffer));
+  });
+```
 
-    markupgo.pdf.fromUrl(url, pdfOptions).json().then((task) => {
-        console.log(task);
-    });
+### fromHtml
 
-    markupgo.pdf.fromUrl(url, pdfOptions).buffer().then((buffer) => {
-        fs.writeFileSync('output.pdf', Buffer.from(buffer));
-    });
-    ```
+```typescript
+import * as fs from "fs";
 
-3. **fromHtml**
+const html: string = "<html><body>Hello World</body></html>";
 
-    ```typescript
-    import * as fs from 'fs';
+const pdfOptions: PdfOptions = {
+  header: "<div>Header</div>",
+  properties: {
+    printBackground: true,
+    landscape: true,
+  },
+};
 
-    const html: string = '<html><body>Hello World</body></html>';
+markupGo.pdf
+  .fromHtml(html, pdfOptions)
+  .json()
+  .then((task) => {
+    console.log(task);
+  });
 
-    const pdfOptions: PdfOptions = {
-        header: '<div>Header</div>',
-        properties: {
-            printBackground: true,
-            landscape: true
-        }
-    };
-
-    markupgo.pdf.fromHtml(html, pdfOptions).json().then((task) => {
-        console.log(task);
-    });
-
-    markupgo.pdf.fromHtml(html, pdfOptions).buffer().then((buffer) => {
-        fs.writeFileSync('output.pdf', Buffer.from(buffer));
-    });
-    ```
+markupGo.pdf
+  .fromHtml(html, pdfOptions)
+  .buffer()
+  .then((buffer) => {
+    fs.writeFileSync("output.pdf", Buffer.from(buffer));
+  });
+```
 
 ## Type Definitions
 
@@ -218,8 +240,8 @@ const markupgo = new MarkupGo({
 
 ```typescript
 type Libraries = {
-    js: string[];
-    css: string[];
+  js: string[];
+  css: string[];
 };
 ```
 
@@ -227,12 +249,12 @@ type Libraries = {
 
 ```typescript
 type ITask = {
-    id: string;
-    url: string;
-    format: 'png' | 'jpeg' | 'webp';
-    size: number;
-    width: number;
-    height: number;
+  id: string;
+  url: string;
+  format: "png" | "jpeg" | "webp";
+  size: number;
+  width: number;
+  height: number;
 };
 ```
 
@@ -240,18 +262,18 @@ type ITask = {
 
 ```typescript
 type Properties = {
-    singlePage?: boolean;
-    size?: Size;
-    margins?: Margins;
-    preferCssPageSize?: boolean;
-    printBackground?: boolean;
-    omitBackground?: boolean;
-    landscape?: boolean;
-    scale?: number;
-    nativePageRanges?: {
-        from: number;
-        to: number;
-    };
+  singlePage?: boolean;
+  size?: Size;
+  margins?: Margins;
+  preferCssPageSize?: boolean;
+  printBackground?: boolean;
+  omitBackground?: boolean;
+  landscape?: boolean;
+  scale?: number;
+  nativePageRanges?: {
+    from: number;
+    to: number;
+  };
 };
 ```
 
@@ -259,19 +281,19 @@ type Properties = {
 
 ```typescript
 type PdfOptions = {
-    header?: string;
-    properties?: Properties;
-    pdfUA?: boolean;
-    emulatedMediaType?: 'screen' | 'print';
-    waitDelay?: string;
-    waitForExpression?: string;
-    userAgent?: string;
-    extraHttpHeaders?: Record<string, string>;
-    failOnHttpStatusCodes?: number[];
-    failOnConsoleExceptions?: boolean;
-    skipNetworkIdleEvent?: boolean;
-    metadata?: Record<string, string>;
-    cookies?: Cookie[];
+  header?: string;
+  properties?: Properties;
+  pdfUA?: boolean;
+  emulatedMediaType?: "screen" | "print";
+  waitDelay?: string;
+  waitForExpression?: string;
+  userAgent?: string;
+  extraHttpHeaders?: Record<string, string>;
+  failOnHttpStatusCodes?: number[];
+  failOnConsoleExceptions?: boolean;
+  skipNetworkIdleEvent?: boolean;
+  metadata?: Record<string, string>;
+  cookies?: Cookie[];
 };
 ```
 
@@ -279,11 +301,11 @@ type PdfOptions = {
 
 ```typescript
 type TemplateData = {
-    id: string;
-    context?: Record<string, any>;
-    html?: string;
-    css?: string;
-    libraries?: Libraries;
+  id: string;
+  context?: Record<string, any>;
+  html?: string;
+  css?: string;
+  libraries?: Libraries;
 };
 ```
 
@@ -291,10 +313,6 @@ type TemplateData = {
 
 ```typescript
 type Options = {
-    API_KEY: string;
+  API_KEY: string;
 };
 ```
-
-## License
-
-This library is licensed under the MIT License.
