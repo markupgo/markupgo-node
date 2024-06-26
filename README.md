@@ -25,7 +25,7 @@ To use `MarkupGo`, you need to initialize it with your API key:
 ```typescript
 import MarkupGo from "markupgo-node";
 
-const markupGo = new MarkupGo({
+const markupgo = new MarkupGo({
   API_KEY: "your_api_key_here",
 });
 ```
@@ -68,14 +68,14 @@ const imageOptions: ImageOptions = {
   height: 600,
 };
 
-markupGo.image
+markupgo.image
   .fromTemplate(templateData, imageOptions)
   .json()
   .then((task) => {
     console.log(task);
   });
 
-markupGo.image
+markupgo.image
   .fromTemplate(templateData, imageOptions)
   .buffer()
   .then((buffer) => {
@@ -96,11 +96,11 @@ const imageOptions: ImageOptions = {
   height: 600,
 };
 
-markupGo.image.fromUrl(url, imageOptions).json().then((task) => {
+markupgo.image.fromUrl(url, imageOptions).json().then((task) => {
   console.log(task);
 });
 
-markupGo.image.fromUrl(url, imageOptions).buffer().then((buffer) => {
+markupgo.image.fromUrl(url, imageOptions).buffer().then((buffer) => {
   fs.writeFileSync("output.jpg", Buffer.from(buffer));
 });
 ```
@@ -118,14 +118,14 @@ const imageOptions: ImageOptions = {
   height: 600,
 };
 
-markupGo.image
+markupgo.image
   .fromHtml(html, imageOptions)
   .json()
   .then((task) => {
     console.log(task);
   });
 
-markupGo.image
+markupgo.image
   .fromHtml(html, imageOptions)
   .buffer()
   .then((buffer) => {
@@ -159,14 +159,14 @@ const pdfOptions: PdfOptions = {
   },
 };
 
-markupGo.pdf
+markupgo.pdf
   .fromTemplate(templateData, pdfOptions)
   .json()
   .then((task) => {
     console.log(task);
   });
 
-markupGo.pdf
+markupgo.pdf
   .fromTemplate(templateData, pdfOptions)
   .buffer()
   .then((buffer) => {
@@ -189,14 +189,14 @@ const pdfOptions: PdfOptions = {
   },
 };
 
-markupGo.pdf
+markupgo.pdf
   .fromUrl(url, pdfOptions)
   .json()
   .then((task) => {
     console.log(task);
   });
 
-markupGo.pdf
+markupgo.pdf
   .fromUrl(url, pdfOptions)
   .buffer()
   .then((buffer) => {
@@ -219,14 +219,14 @@ const pdfOptions: PdfOptions = {
   },
 };
 
-markupGo.pdf
+markupgo.pdf
   .fromHtml(html, pdfOptions)
   .json()
   .then((task) => {
     console.log(task);
   });
 
-markupGo.pdf
+markupgo.pdf
   .fromHtml(html, pdfOptions)
   .buffer()
   .then((buffer) => {
