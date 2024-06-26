@@ -68,19 +68,15 @@ const imageOptions: ImageOptions = {
   height: 600,
 };
 
-markupgo.image
-  .fromTemplate(templateData, imageOptions)
-  .json()
-  .then((task) => {
-    console.log(task);
-  });
+markupgo.image.fromTemplate(templateData, imageOptions).json()
+.then((task) => {
+  console.log(task);
+});
 
-markupgo.image
-  .fromTemplate(templateData, imageOptions)
-  .buffer()
-  .then((buffer) => {
-    fs.writeFileSync("output.png", Buffer.from(buffer));
-  });
+markupgo.image.fromTemplate(templateData, imageOptions).buffer()
+.then((buffer) => {
+  fs.writeFileSync("output.png", Buffer.from(buffer));
+});
 ```
 
 ### fromUrl
@@ -96,11 +92,13 @@ const imageOptions: ImageOptions = {
   height: 600,
 };
 
-markupgo.image.fromUrl(url, imageOptions).json().then((task) => {
+markupgo.image.fromUrl(url, imageOptions).json()
+.then((task) => {
   console.log(task);
 });
 
-markupgo.image.fromUrl(url, imageOptions).buffer().then((buffer) => {
+markupgo.image.fromUrl(url, imageOptions).buffer()
+.then((buffer) => {
   fs.writeFileSync("output.jpg", Buffer.from(buffer));
 });
 ```
@@ -118,19 +116,15 @@ const imageOptions: ImageOptions = {
   height: 600,
 };
 
-markupgo.image
-  .fromHtml(html, imageOptions)
-  .json()
-  .then((task) => {
-    console.log(task);
-  });
+markupgo.image.fromHtml(html, imageOptions).json()
+.then((task) => {
+  console.log(task);
+});
 
-markupgo.image
-  .fromHtml(html, imageOptions)
-  .buffer()
-  .then((buffer) => {
-    fs.writeFileSync("output.webp", Buffer.from(buffer));
-  });
+markupgo.image.fromHtml(html, imageOptions).buffer()
+.then((buffer) => {
+  fs.writeFileSync("output.webp", Buffer.from(buffer));
+});
 ```
 
 ## PDF Conversion Methods
@@ -159,19 +153,15 @@ const pdfOptions: PdfOptions = {
   },
 };
 
-markupgo.pdf
-  .fromTemplate(templateData, pdfOptions)
-  .json()
-  .then((task) => {
-    console.log(task);
-  });
+markupgo.pdf.fromTemplate(templateData, pdfOptions).json()
+.then((task) => {
+  console.log(task);
+});
 
-markupgo.pdf
-  .fromTemplate(templateData, pdfOptions)
-  .buffer()
-  .then((buffer) => {
-    fs.writeFileSync("output.pdf", Buffer.from(buffer));
-  });
+markupgo.pdf.fromTemplate(templateData, pdfOptions).buffer()
+.then((buffer) => {
+  fs.writeFileSync("output.pdf", Buffer.from(buffer));
+});
 ```
 
 ### fromUrl
@@ -189,19 +179,15 @@ const pdfOptions: PdfOptions = {
   },
 };
 
-markupgo.pdf
-  .fromUrl(url, pdfOptions)
-  .json()
-  .then((task) => {
-    console.log(task);
-  });
+markupgo.pdf.fromUrl(url, pdfOptions).json()
+.then((task) => {
+  console.log(task);
+});
 
-markupgo.pdf
-  .fromUrl(url, pdfOptions)
-  .buffer()
-  .then((buffer) => {
-    fs.writeFileSync("output.pdf", Buffer.from(buffer));
-  });
+markupgo.pdf.fromUrl(url, pdfOptions).buffer()
+.then((buffer) => {
+  fs.writeFileSync("output.pdf", Buffer.from(buffer));
+});
 ```
 
 ### fromHtml
@@ -219,19 +205,15 @@ const pdfOptions: PdfOptions = {
   },
 };
 
-markupgo.pdf
-  .fromHtml(html, pdfOptions)
-  .json()
-  .then((task) => {
-    console.log(task);
-  });
+markupgo.pdf.fromHtml(html, pdfOptions).json()
+.then((task) => {
+  console.log(task);
+});
 
-markupgo.pdf
-  .fromHtml(html, pdfOptions)
-  .buffer()
-  .then((buffer) => {
-    fs.writeFileSync("output.pdf", Buffer.from(buffer));
-  });
+markupgo.pdf.fromHtml(html, pdfOptions).buffer()
+.then((buffer) => {
+  fs.writeFileSync("output.pdf", Buffer.from(buffer));
+});
 ```
 
 ## Type Definitions
@@ -258,10 +240,44 @@ type ITask = {
 };
 ```
 
-### Properties
+### Cookie
 
 ```typescript
-type Properties = {
+type Cookie = {
+  name: string;
+  value: string;
+  domain: string;
+  path?: string;
+  secure?: boolean;
+  httpOnly?: boolean;
+  sameSite?: "Strict" | "Lax" | "None";
+};
+```
+
+### Size
+
+```typescript
+type Size = {
+  width: number;
+  height: number;
+};
+```
+
+### Margins
+
+```typescript
+type Margins = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+```
+
+### PdfProperties
+
+```typescript
+type PdfProperties = {
   singlePage?: boolean;
   size?: Size;
   margins?: Margins;
@@ -282,7 +298,7 @@ type Properties = {
 ```typescript
 type PdfOptions = {
   header?: string;
-  properties?: Properties;
+  properties?: PdfProperties;
   pdfUA?: boolean;
   emulatedMediaType?: "screen" | "print";
   waitDelay?: string;
@@ -294,6 +310,37 @@ type PdfOptions = {
   skipNetworkIdleEvent?: boolean;
   metadata?: Record<string, string>;
   cookies?: Cookie[];
+};
+```
+
+### ImageProperties
+
+```typescript
+type ImageProperties = {
+  format?: "png" | "jpeg" | "webp";
+  quality?: number;
+  omitBackground?: boolean;
+  width?: number;
+  height?: number;
+  clip?: boolean;
+};
+```
+
+### ImageOptions
+
+```typescript
+type ImageOptions = {
+  header?: string;
+  footer?: string;
+  properties?: ImageProperties;
+  emulatedMediaType?: "screen" | "print";
+  waitDelay?: string;
+  waitForExpression?: string;
+  extraHttpHeaders?: Record<string, string>;
+  failOnConsoleExceptions?: boolean;
+  failOnHttpStatusCodes?: number[];
+  skipNetworkIdleEvent?: boolean;
+  optimizeForSpeed?: boolean;
 };
 ```
 
