@@ -1,7 +1,6 @@
 {
-  "name": "@markupgo/node",
-  "private": false,
-  "version": "1.0.0",
+  "name": "markupgo-node",
+  "version": "1.0.2",
   "description": "PDF & Image conversion API for developers",
   "bugs": {
     "url": "https://github.com/markupgo/markupgo-node/issues"
@@ -19,6 +18,7 @@
   "scripts": {
     "start": "node dist/src/playground/index.js",
     "build": "tsup",
+    "publish-to-npm": "npm run build && npm publish",
     "typecheck": "tsc --noemit",
     "lint": "eslint --ignore-path .gitignore --ext .ts src --fix && npm run typecheck",
     "start:dev": "tsx watch --tsconfig tsconfig.json src/playground/index.ts"

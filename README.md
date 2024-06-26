@@ -11,13 +11,13 @@ Please see the [MarkupGo API Documentation](https://markupgo.com/docs) for more 
 To install the library, use npm or yarn:
 
 ```bash
-npm install markupgo
+npm install markupgo-node
 ```
 
 or
 
 ```bash
-yarn add markupgo
+yarn add markupgo-node
 ```
 
 ## Usage
@@ -27,9 +27,9 @@ yarn add markupgo
 To use `MarkupGo`, you need to initialize it with your API key:
 
 ```typescript
-import MarkupGo from 'markupgo';
+import MarkupGo from 'markupgo-node';
 
-const markupGo = new MarkupGo({
+const markupgo = new MarkupGo({
     API_KEY: 'your_api_key_here'
 });
 ```
@@ -74,11 +74,11 @@ const markupGo = new MarkupGo({
         height: 600
     };
 
-    markupGo.image.fromTemplate(templateData, imageOptions).json().then((task) => {
+    markupgo.image.fromTemplate(templateData, imageOptions).json().then((task) => {
         console.log(task);
     });
 
-    markupGo.image.fromTemplate(templateData, imageOptions).buffer().then((buffer) => {
+    markupgo.image.fromTemplate(templateData, imageOptions).buffer().then((buffer) => {
         fs.writeFileSync('output.png', Buffer.from(buffer));
     });
     ```
@@ -96,11 +96,11 @@ const markupGo = new MarkupGo({
         height: 600
     };
 
-    markupGo.image.fromUrl(url, imageOptions).json().then((task) => {
+    markupgo.image.fromUrl(url, imageOptions).json().then((task) => {
         console.log(task);
     });
 
-    markupGo.image.fromUrl(url, imageOptions).buffer().then((buffer) => {
+    markupgo.image.fromUrl(url, imageOptions).buffer().then((buffer) => {
         fs.writeFileSync('output.jpg', Buffer.from(buffer));
     });
     ```
@@ -118,11 +118,11 @@ const markupGo = new MarkupGo({
         height: 600
     };
 
-    markupGo.image.fromHtml(html, imageOptions).json().then((task) => {
+    markupgo.image.fromHtml(html, imageOptions).json().then((task) => {
         console.log(task);
     });
 
-    markupGo.image.fromHtml(html, imageOptions).buffer().then((buffer) => {
+    markupgo.image.fromHtml(html, imageOptions).buffer().then((buffer) => {
         fs.writeFileSync('output.webp', Buffer.from(buffer));
     });
     ```
@@ -155,11 +155,11 @@ const markupGo = new MarkupGo({
         }
     };
 
-    markupGo.pdf.fromTemplate(templateData, pdfOptions).json().then((task) => {
+    markupgo.pdf.fromTemplate(templateData, pdfOptions).json().then((task) => {
         console.log(task);
     });
 
-    markupGo.pdf.fromTemplate(templateData, pdfOptions).buffer().then((buffer) => {
+    markupgo.pdf.fromTemplate(templateData, pdfOptions).buffer().then((buffer) => {
         fs.writeFileSync('output.pdf', Buffer.from(buffer));
     });
     ```
@@ -179,11 +179,11 @@ const markupGo = new MarkupGo({
         }
     };
 
-    markupGo.pdf.fromUrl(url, pdfOptions).json().then((task) => {
+    markupgo.pdf.fromUrl(url, pdfOptions).json().then((task) => {
         console.log(task);
     });
 
-    markupGo.pdf.fromUrl(url, pdfOptions).buffer().then((buffer) => {
+    markupgo.pdf.fromUrl(url, pdfOptions).buffer().then((buffer) => {
         fs.writeFileSync('output.pdf', Buffer.from(buffer));
     });
     ```
@@ -203,11 +203,11 @@ const markupGo = new MarkupGo({
         }
     };
 
-    markupGo.pdf.fromHtml(html, pdfOptions).json().then((task) => {
+    markupgo.pdf.fromHtml(html, pdfOptions).json().then((task) => {
         console.log(task);
     });
 
-    markupGo.pdf.fromHtml(html, pdfOptions).buffer().then((buffer) => {
+    markupgo.pdf.fromHtml(html, pdfOptions).buffer().then((buffer) => {
         fs.writeFileSync('output.pdf', Buffer.from(buffer));
     });
     ```
