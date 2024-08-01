@@ -1,4 +1,4 @@
-<img src="https://assets.markupgo.com/brand/logo-violet.svg" width="300" style="margin: 20px auto; display: block;">
+<img src="https://assets.markupgo.com/brand/logo-violet.svg?1" width="300" style="margin: 20px auto; display: block;">
 
 Node client for the [MarkupGo API](https://markupgo.com/).
 
