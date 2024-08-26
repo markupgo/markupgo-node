@@ -1,6 +1,6 @@
 {
   "name": "markupgo-node",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "PDF & Image conversion API for developers",
   "bugs": {
     "url": "https://github.com/markupgo/markupgo-node/issues"
