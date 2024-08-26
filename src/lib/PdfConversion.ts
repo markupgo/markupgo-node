@@ -41,6 +41,7 @@ export type PdfProperties = {
 
 export type PdfOptions = {
   header?: string;
+  footer?: string;
   properties?: PdfProperties;
   pdfUA?: boolean;
   emulatedMediaType?: 'screen' | 'print';

@@ -146,7 +146,6 @@ const templateData: TemplateData = {
 };
 
 const pdfOptions: PdfOptions = {
-  header: "<div>Header</div>",
   properties: {
     printBackground: true,
     landscape: true,
@@ -172,7 +171,6 @@ import * as fs from "fs";
 const url: string = "https://example.com";
 
 const pdfOptions: PdfOptions = {
-  header: "<div>Header</div>",
   properties: {
     printBackground: true,
     landscape: true,
@@ -198,7 +196,6 @@ import * as fs from "fs";
 const html: string = "<html><body>Hello World</body></html>";
 
 const pdfOptions: PdfOptions = {
-  header: "<div>Header</div>",
   properties: {
     printBackground: true,
     landscape: true,
@@ -298,6 +295,7 @@ type PdfProperties = {
 ```typescript
 type PdfOptions = {
   header?: string;
+  footer?: string;
   properties?: PdfProperties;
   pdfUA?: boolean;
   emulatedMediaType?: "screen" | "print";
@@ -330,8 +328,6 @@ type ImageProperties = {
 
 ```typescript
 type ImageOptions = {
-  header?: string;
-  footer?: string;
   properties?: ImageProperties;
   emulatedMediaType?: "screen" | "print";
   waitDelay?: string;

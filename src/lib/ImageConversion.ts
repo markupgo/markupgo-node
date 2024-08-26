@@ -12,8 +12,6 @@ export type ImageProperties = {
 }
 
 export type ImageOptions = {
-  header?: string;
-  footer?: string;
   properties?: ImageProperties;
   emulatedMediaType?: 'screen' | 'print';
   waitDelay?: string;
