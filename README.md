@@ -52,14 +52,11 @@ const markupgo = new MarkupGo({
 import * as fs from "fs";
 
 const templateData: TemplateData = {
-  id: "template-id",
-  context: { key: "value" },
-  html: "<html><body>Hello World</body></html>",
-  css: "body { color: red; }",
-  libraries: {
-    js: [],
-    css: [],
-  },
+  id: PODCAST_TEMPLATE_ID,
+  context: { 
+    title: 'Episode 1',
+    description: 'We talk about stuff and things, tune in!'
+  }
 };
 
 const imageOptions: ImageOptions = {
@@ -127,6 +124,38 @@ markupgo.image.fromHtml(html, imageOptions).buffer()
 });
 ```
 
+### fromMarkdown
+
+```typescript
+import * as fs from "fs";
+
+const input: MarkdownInput = {
+  markdown: "# Hello World",
+  css: "h1 { color: #f2f2f2; }",
+  dark: true,
+  padding: 45,
+}
+
+const imageOptions: ImageOptions = {
+  properties: {
+    format: "png",
+    width: 800,
+    height: 600,
+  }
+};
+
+markupgo.image.fromMarkdown(input, imageOptions).json()
+.then((task) => {
+  console.log(task);
+});
+
+markupgo.image.fromMarkdown(input, imageOptions).buffer()
+.then((buffer) => {
+  fs.writeFileSync("output.png", Buffer.from(buffer));
+});
+
+```
+
 ## PDF Conversion Methods
 
 ### fromTemplate
@@ -135,14 +164,11 @@ markupgo.image.fromHtml(html, imageOptions).buffer()
 import * as fs from "fs";
 
 const templateData: TemplateData = {
-  id: "template-id",
-  context: { key: "value" },
-  html: "<html><body>Hello World</body></html>",
-  css: "body { color: red; }",
-  libraries: {
-    js: [],
-    css: [],
-  },
+  id: PODCAST_TEMPLATE_ID,
+  context: { 
+    title: 'Episode 1',
+    description: 'We talk about stuff and things, tune in!'
+  }
 };
 
 const pdfOptions: PdfOptions = {
@@ -208,6 +234,35 @@ markupgo.pdf.fromHtml(html, pdfOptions).json()
 });
 
 markupgo.pdf.fromHtml(html, pdfOptions).buffer()
+.then((buffer) => {
+  fs.writeFileSync("output.pdf", Buffer.from(buffer));
+});
+```
+
+### fromMarkdown
+
+```typescript
+import * as fs from "fs";
+
+const input: MarkdownInput = {
+  markdown: "# Hello World",
+  css: "h1 { color: #f2f2f2; }",
+  dark: true,
+  padding: 45,
+}
+
+const pdfOptions: PdfOptions = {
+  properties: {
+    singlePage: true, // Best way to render all content in a single page
+  },
+};
+
+markupgo.pdf.fromMarkdown(input, pdfOptions).json()
+.then((task) => {
+  console.log(task);
+});
+
+markupgo.pdf.fromMarkdown(input, pdfOptions).buffer()
 .then((buffer) => {
   fs.writeFileSync("output.pdf", Buffer.from(buffer));
 });

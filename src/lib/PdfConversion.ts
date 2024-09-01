@@ -13,8 +13,8 @@ export type Cookie = {
 }
 
 export type Size = {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
 export type Margins = {
@@ -64,6 +64,13 @@ export type TemplateData = {
   libraries?: Libraries;
 }
 
+export type MarkdownOptions = {
+  markdown: string;
+  css?: string;
+  dark?: boolean;
+  padding?: number;
+}
+
 
 export class PdfConversion {
   private API_KEY: string;
@@ -92,11 +99,11 @@ export class PdfConversion {
 
   private generateResponse = (body: any) => {
     const json = () => {
-      return this.ofetchJson('/pdf/json', { method: 'POST', body }) as Promise<ITask>
+      return this.ofetchJson('/pdf', { method: 'POST', body }) as Promise<ITask>
     }
 
     const buffer = () => {
-      return this.ofetchBuffer('/pdf/buffer', { method: 'POST', body }) as Promise<ArrayBuffer>
+      return this.ofetchBuffer('/pdf', { method: 'POST', body }) as Promise<ArrayBuffer>
     }
 
     return {
@@ -137,5 +144,22 @@ export class PdfConversion {
     }
 
    return this.generateResponse(body)
+  }
+
+  fromMarkdown = (input: MarkdownOptions, options?: PdfOptions) => {
+    const body = {
+      source: {
+        type: 'markdown',
+        data: {
+          markdown: input.markdown,
+          css: input.css,
+          dark: input.dark,
+          padding: input.padding
+        }
+      },
+      options
+    }
+
+    return this.generateResponse(body)
   }
 }

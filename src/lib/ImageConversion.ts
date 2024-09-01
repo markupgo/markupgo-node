@@ -32,6 +32,14 @@ export type TemplateData = {
   autoHeight?: boolean;
 }
 
+export type MarkdownOptions = {
+  markdown: string;
+  css?: string;
+  dark?: boolean;
+  padding?: number;
+}
+
+
 export class ImageConversion {
   private API_KEY: string;
   private ofetchJson: $Fetch;
@@ -104,5 +112,22 @@ export class ImageConversion {
     }
 
    return this.generateResponse(body)
+  }
+
+  fromMarkdown = (input: MarkdownOptions, options?: ImageOptions) => {
+    const body = {
+      source: {
+        type: 'markdown',
+        data: {
+          markdown: input.markdown,
+          css: input.css,
+          dark: input.dark,
+          padding: input.padding
+        }
+      },
+      options
+    }
+
+    return this.generateResponse(body)
   }
 }
