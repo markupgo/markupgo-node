@@ -1,6 +1,6 @@
 import { API_URL } from 'contants';
 import { $Fetch, ofetch } from 'ofetch';
-import { ITask, Libraries } from 'types';
+import { ITask, MarkdownOptions, TemplateData } from 'types';
 
 export type ImageProperties = {
   format?: 'png' | 'jpeg' | 'webp';
@@ -22,23 +22,6 @@ export type ImageOptions = {
   skipNetworkIdleEvent?: boolean;
   optimizeForSpeed?: boolean;
 }
-
-export type TemplateData = {
-  id: string;
-  context?: Record<string, any>;
-  html?: string;
-  css?: string;
-  libraries?: Libraries
-  autoHeight?: boolean;
-}
-
-export type MarkdownOptions = {
-  markdown: string;
-  css?: string;
-  dark?: boolean;
-  padding?: number;
-}
-
 
 export class ImageConversion {
   private API_KEY: string;

@@ -300,7 +300,7 @@ Please refer to the [Office to PDF API documentation](https://markupgo.com/docs/
 ### Convert a `.docx` File to PDF
 
 ```typescript
-import { PathLikeOrReadStream } from "markupgo-node/lib/OfficeConversion";
+import { type PathLikeOrReadStream } from "markupgo-node";
 import fs from "fs";
 
 const buffer = fs.readFileSync("./src/playground/test.docx");
@@ -328,7 +328,7 @@ markupgo.office.convert(files).buffer().then((buffer) => {
 The `merge` option must be set to `true` to merge multiple files into a single PDF.
 
 ```typescript
-import { PathLikeOrReadStream } from "markupgo-node/lib/OfficeConversion";
+import { type PathLikeOrReadStream } from "markupgo-node";
 import fs from "fs";
 
 const buffer = fs.readFileSync("./src/playground/test.docx");
@@ -358,7 +358,7 @@ markupgo.office.convert(files, options).buffer().then((buffer) => {
 ### Convert a `.docx` File to PDF with Custom Options
 
 ```typescript
-import { PathLikeOrReadStream } from "markupgo-node/lib/OfficeConversion";
+import { type PathLikeOrReadStream } from "markupgo-node";
 import fs from "fs";
 
 const buffer = fs.readFileSync("./src/playground/test.docx");

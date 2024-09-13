@@ -1,6 +1,6 @@
 {
   "name": "markupgo-node",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "PDF & Image conversion API for developers",
   "bugs": {
     "url": "https://github.com/markupgo/markupgo-node/issues"
@@ -11,8 +11,14 @@
   "module": "dist/index.mjs",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
     }
   },
   "scripts": {
@@ -25,50 +31,31 @@
   },
   "author": "hello@markupgo.com",
   "keywords": [
-    "markup to image",
-    "markup to pdf",
-    "image screenshot",
-    "image rendering",
-    "image conversion",
-    "pdf rendering",
-    "pdf conversion",
-    "markup to image service",
-    "markup to pdf service",
-    "image rendering service",
-    "image conversion service",
-    "pdf rendering service",
-    "pdf conversion service",
-    "markup to image saas",
-    "markup to pdf saas",
-    "image rendering saas",
-    "image conversion saas",
-    "pdf rendering saas",
-    "pdf conversion saas",
-    "markup to image generating",
-    "markup to pdf generating",
-    "image rendering generating",
-    "image conversion generating",
-    "pdf rendering generating",
-    "pdf conversion generating",
-    "markup to image rendering",
-    "markup to pdf rendering",
-    "markup to image conversion",
-    "markup to pdf conversion",
-    "screenshot to pdf",
-    "headless browser",
-    "chrome headless",
-    "puppeteer automation",
-    "phantomjs tool",
-    "url capture",
-    "url to png",
-    "url to jpeg",
+    "html to pdf",
+    "html to image",
+    "pdf",
+    "image",
+    "conversion",
+    "api",
+    "markupgo",
+    "markupgo-node",
+    "markdown to pdf",
+    "markdown to image",
     "url to pdf",
-    "url2png auto height",
-    "url capture fullscreen",
-    "png rendering",
-    "jpeg rendering",
-    "png conversion",
-    "jpeg conversion"
+    "url to image",
+    "html to pdf api",
+    "html to image api",
+    "pdf api",
+    "image api",
+    "conversion api",
+    "image conversion api",
+    "pdf conversion api",
+    "html to pdf conversion api",
+    "html to image conversion api",
+    "markdown to pdf api",
+    "markdown to image api",
+    "url to pdf api",
+    "url to image api"
   ],
   "license": "ISC",
   "dependencies": {

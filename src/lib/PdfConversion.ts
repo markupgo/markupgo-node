@@ -1,6 +1,6 @@
 import { API_URL } from 'contants';
 import { $Fetch, ofetch } from 'ofetch';
-import { ITask, Libraries } from 'types';
+import { ITask, MarkdownOptions, TemplateData } from 'types';
 
 export type Cookie = {
   name: string;
@@ -56,20 +56,7 @@ export type PdfOptions = {
   cookies?: Cookie[];
 }
 
-export type TemplateData = {
-  id: string;
-  context?: Record<string, any>;
-  html?: string;
-  css?: string;
-  libraries?: Libraries;
-}
 
-export type MarkdownOptions = {
-  markdown: string;
-  css?: string;
-  dark?: boolean;
-  padding?: number;
-}
 
 
 export class PdfConversion {

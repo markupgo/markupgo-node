@@ -11,3 +11,18 @@ export type ITask = {
   width: number;
   height: number;
 }
+
+export type TemplateData = {
+  id: string;
+  context?: Record<string, any>;
+  html?: string;
+  css?: string;
+  libraries?: Libraries;
+}
+
+export type MarkdownOptions = {
+  markdown: string;
+  css?: string;
+  dark?: boolean;
+  padding?: number;
+}
