@@ -2,7 +2,7 @@
 
 Node client for the [MarkupGo API](https://markupgo.com/).
 
-It provides methods to generate images and PDFs from templates, URLs, or HTML.
+It provides methods to generate images and PDFs from templates, URLs, or HTML. It also supports converting over 130 document formats to PDF, including `.docx`, `.xlsx`, `.pptx`, and more.
 
 ## Installation
 
@@ -35,7 +35,9 @@ const markupgo = new MarkupGo({
 - **ImageConversion**
   - Provides methods to generate images from templates, URLs, or HTML strings.
 - **PdfConversion**
-  - Provides methods to generate PDFs from templates, URLs, or HTML strings.
+  - Provides methods to generate PDFs from templates, URLs, or HTML strings. 
+- **OfficeConversion**
+  - Provides methods to convert over 130 document formats to PDF, including `.docx`, `.xlsx`, `.pptx`, and more. It supports merging multiple files into a single PDF.
 
 ## Response Types
 
@@ -45,6 +47,10 @@ const markupgo = new MarkupGo({
   - Used to handle raw binary data for image or PDF output.
 
 ## Image Conversion Methods
+
+The **Image Conversion API** enables the generation of images from templates, URLs, or HTML strings. It supports various image formats, including PNG, JPEG, and WebP, and provides options to customize the output.
+
+Please refer to the [Image API documentation](https://markupgo.com/docs/api/image) for more information.
 
 ### fromTemplate
 
@@ -60,9 +66,11 @@ const templateData: TemplateData = {
 };
 
 const imageOptions: ImageOptions = {
-  format: "png",
-  width: 800,
-  height: 600,
+  properties: {
+    format: "png",
+    width: 800,
+    height: 600,
+  }
 };
 
 markupgo.image.fromTemplate(templateData, imageOptions).json()
@@ -84,9 +92,12 @@ import * as fs from "fs";
 const url: string = "https://example.com";
 
 const imageOptions: ImageOptions = {
-  format: "jpeg",
-  width: 800,
-  height: 600,
+ properties: {
+    format: "jpeg",
+    width: 800,
+    height: 600,
+    clip: true,
+  }
 };
 
 markupgo.image.fromUrl(url, imageOptions).json()
@@ -100,6 +111,12 @@ markupgo.image.fromUrl(url, imageOptions).buffer()
 });
 ```
 
+::content-alert{type="warning"}
+  Heads up!
+
+  For the URL source (fromUrl method), the **clip** option will clip the image to the specified **width** and **height**. If false, the **height** will be ignored. For other conversion types, you don't need to set the **clip** option to force the image to be clipped.
+::
+
 ### fromHtml
 
 ```typescript
@@ -108,9 +125,11 @@ import * as fs from "fs";
 const html: string = "<html><body>Hello World</body></html>";
 
 const imageOptions: ImageOptions = {
-  format: "webp",
-  width: 800,
-  height: 600,
+  properties: {
+    format: "webp",
+    width: 800,
+    height: 600,
+  }
 };
 
 markupgo.image.fromHtml(html, imageOptions).json()
@@ -157,6 +176,8 @@ markupgo.image.fromMarkdown(input, imageOptions).buffer()
 ```
 
 ## PDF Conversion Methods
+
+Generate PDFs from URLs, HTML, and templates. Please refer to the [PDF API documentation](https://markupgo.com/docs/api/pdf) for more information.
 
 ### fromTemplate
 
@@ -268,149 +289,394 @@ markupgo.pdf.fromMarkdown(input, pdfOptions).buffer()
 });
 ```
 
-## Type Definitions
+## Office to PDF Conversion
 
-### Libraries
+The **Office to PDF API** enables seamless conversion of over 130 document formats to PDF, including `.docx`, `.xlsx`, `.pptx`, and more. Whether you need high-quality conversions, custom PDF properties, or to merge multiple files, this API simplifies the process.
+
+Please refer to the [Office to PDF API documentation](https://markupgo.com/docs/api/office-to-pdf) for more information for supported formats, options, limits, and more.
+
+### Examples
+
+### Convert a `.docx` File to PDF
 
 ```typescript
-type Libraries = {
-  js: string[];
-  css: string[];
-};
+import { PathLikeOrReadStream } from "markupgo-node/lib/OfficeConversion";
+import fs from "fs";
+
+const buffer = fs.readFileSync("./src/playground/test.docx");
+
+const files = [
+  {
+    data: buffer,
+    filename: "test.docx",
+  },
+  "./src/playground/report.xlsx",
+] as PathLikeOrReadStream[];
+
+markupgo.office.convert(files).json().then((task) => {
+  console.log(task);
+});
+
+// OR
+markupgo.office.convert(files).buffer().then((buffer) => {
+  fs.writeFileSync("output.pdf", Buffer.from(buffer));
+});
 ```
 
-### ITask
+### Convert Multiple Files to PDF with Merging
+
+The `merge` option must be set to `true` to merge multiple files into a single PDF.
 
 ```typescript
-type ITask = {
-  id: string;
-  url: string;
-  format: "png" | "jpeg" | "webp";
-  size: number;
-  width: number;
-  height: number;
+import { PathLikeOrReadStream } from "markupgo-node/lib/OfficeConversion";
+import fs from "fs";
+
+const buffer = fs.readFileSync("./src/playground/test.docx");
+
+const files = [
+  {
+    data: buffer,
+    filename: "test.docx",
+  },
+  "./src/playground/report.xlsx",
+] as PathLikeOrReadStream[];
+
+const options: OfficeToPdfOptions = {
+  merge: true,
 };
+
+markupgo.office.convert(files, options).json().then((task) => {
+  console.log(task);
+});
+// OR
+markupgo.office.convert(files, options).buffer().then((buffer) => {
+  fs.writeFileSync("output.pdf", Buffer.from(buffer));
+});
+
 ```
 
-### Cookie
+### Convert a `.docx` File to PDF with Custom Options
 
 ```typescript
-type Cookie = {
-  name: string;
-  value: string;
-  domain: string;
-  path?: string;
-  secure?: boolean;
-  httpOnly?: boolean;
-  sameSite?: "Strict" | "Lax" | "None";
+import { PathLikeOrReadStream } from "markupgo-node/lib/OfficeConversion";
+import fs from "fs";
+
+const buffer = fs.readFileSync("./src/playground/test.docx");
+
+const files = [
+  {
+    data: buffer,
+    filename: "test.docx",
+  },
+  "./src/playground/report.xlsx",
+] as PathLikeOrReadStream[];
+
+const options: OfficeToPdfOptions = {
+  properties: {
+    landscape: true,
+    printBackground: true,
+  }
 };
+
+markupgo.office.convert(files, options).json().then((task) => {
+  console.log(task);
+});
+// OR
+markupgo.office.convert(files, options).buffer().then((buffer) => {
+  fs.writeFileSync("output.pdf", Buffer.from(buffer));
+});
+
 ```
 
-### Size
+## Troubleshooting for Office to PDF Conversion
+
+If you encounter issues, check for the following:
+
+- **File too large:** Ensure your file size does not exceed the maximum limit.
+- **Unsupported file types:** Double-check that the file format is supported by referring to the [supported formats](https://markupgo.com/docs/api/office-to-pdf#full-list-of-supported-formats).
+- **Invalid API key:** Verify your API key is valid and has the correct permissions.
+
+
+## Types
+
+### Image
+
+<details>
+  <summary>Common Types</summary>
+  
+  ```typescript
+  type ImageProperties = {
+    format?: 'png' | 'jpeg' | 'webp';
+    quality?: number;
+    omitBackground?: boolean;
+    width?: number;
+    height?: number;
+    clip?: boolean;
+  }
+  
+  type ImageOptions = {
+    properties?: ImageProperties;
+    emulatedMediaType?: 'screen' | 'print';
+    waitDelay?: string;
+    waitForExpression?: string;
+    extraHttpHeaders?: Record<string, string>;
+    failOnConsoleExceptions?: boolean;
+    failOnHttpStatusCodes?: number[];
+    skipNetworkIdleEvent?: boolean;
+    optimizeForSpeed?: boolean;
+  }
+
+  type ITask = {
+    id: string;
+    url: string;
+    format: 'png' | 'jpeg' | 'webp'
+    size: number;
+    width: number;
+    height: number;
+  }
+  ```
+</details>
+
+<details>
+<summary>fromTemplate</summary>
 
 ```typescript
-type Size = {
-  width: number;
-  height: number;
-};
-```
+fromTemplate(data: TemplateData, options?: ImageOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
 
-### Margins
-
-```typescript
-type Margins = {
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-```
-
-### PdfProperties
-
-```typescript
-type PdfProperties = {
-  singlePage?: boolean;
-  size?: Size;
-  margins?: Margins;
-  preferCssPageSize?: boolean;
-  printBackground?: boolean;
-  omitBackground?: boolean;
-  landscape?: boolean;
-  scale?: number;
-  nativePageRanges?: {
-    from: number;
-    to: number;
-  };
-};
-```
-
-### PdfOptions
-
-```typescript
-type PdfOptions = {
-  header?: string;
-  footer?: string;
-  properties?: PdfProperties;
-  pdfUA?: boolean;
-  emulatedMediaType?: "screen" | "print";
-  waitDelay?: string;
-  waitForExpression?: string;
-  userAgent?: string;
-  extraHttpHeaders?: Record<string, string>;
-  failOnHttpStatusCodes?: number[];
-  failOnConsoleExceptions?: boolean;
-  skipNetworkIdleEvent?: boolean;
-  metadata?: Record<string, string>;
-  cookies?: Cookie[];
-};
-```
-
-### ImageProperties
-
-```typescript
-type ImageProperties = {
-  format?: "png" | "jpeg" | "webp";
-  quality?: number;
-  omitBackground?: boolean;
-  width?: number;
-  height?: number;
-  clip?: boolean;
-};
-```
-
-### ImageOptions
-
-```typescript
-type ImageOptions = {
-  properties?: ImageProperties;
-  emulatedMediaType?: "screen" | "print";
-  waitDelay?: string;
-  waitForExpression?: string;
-  extraHttpHeaders?: Record<string, string>;
-  failOnConsoleExceptions?: boolean;
-  failOnHttpStatusCodes?: number[];
-  skipNetworkIdleEvent?: boolean;
-  optimizeForSpeed?: boolean;
-};
-```
-
-### TemplateData
-
-```typescript
 type TemplateData = {
   id: string;
   context?: Record<string, any>;
   html?: string;
   css?: string;
-  libraries?: Libraries;
-};
+  libraries?: Record<string, string>[];
+  autoHeight?: boolean;
+}
 ```
+</details>
 
-### Options
+<details>
+<summary>fromUrl</summary>
 
 ```typescript
-type Options = {
-  API_KEY: string;
-};
+fromUrl(url: string, options?: ImageOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
 ```
+</details>
+
+<details>
+<summary>fromHtml</summary>
+
+```typescript
+fromHtml(html: string, options?: ImageOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
+```
+</details>
+
+<details>
+<summary>fromMarkdown</summary>
+
+```typescript
+fromMarkdown(input: MarkdownInput, options?: ImageOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
+
+type MarkdownInput = {
+  markdown: string;
+  css?: string;
+  dark?: boolean;
+  padding?: number;
+}
+```
+</details>
+
+
+### Pdf
+
+<details>
+  <summary>Common Types</summary>
+  
+  ```typescript
+  type PdfProperties = {
+    singlePage?: boolean;
+    size?: Size;
+    margins?: Margins;
+    preferCssPageSize?: boolean;
+    printBackground?: boolean;
+    omitBackground?: boolean;
+    landscape?: boolean;
+    scale?: number;
+    nativePageRanges?: {
+      from: number;
+      to: number;
+    };
+  }
+
+  type PdfOptions = {
+    header?: string;
+    footer?: string;
+    properties?: PdfProperties;
+    pdfUA?: boolean;
+    emulatedMediaType?: 'screen' | 'print';
+    waitDelay?: string;
+    waitForExpression?: string;
+    userAgent?: string;
+    extraHttpHeaders?: Record<string, string>;
+    failOnHttpStatusCodes?: number[];
+    failOnConsoleExceptions?: boolean;
+    skipNetworkIdleEvent?: boolean;
+    metadata?: Record<string, string>;
+    cookies?: Cookie[];
+  }
+
+  type Cookie = {
+    name: string;
+    value: string;
+    domain: string;
+    path?: string;
+    secure?: boolean;
+    httpOnly?: boolean;
+    sameSite?: 'Strict' | 'Lax' | 'None';
+  }
+
+  type Size = {
+    width?: number;
+    height?: number;
+  }
+
+  type Margins = {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  }
+  ```
+</details>
+
+<details>
+<summary>fromTemplate</summary>
+```typescript
+fromTemplate(data: TemplateData, options?: PdfOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
+
+type TemplateData = {
+  id: string;
+  context?: Record<string, any>;
+  html?: string;
+  css?: string;
+  libraries?: Record<string, string>[];
+}
+
+```
+</details>
+
+<details>
+<summary>fromUrl</summary>
+
+```typescript
+fromUrl(url: string, options?: PdfOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
+```
+</details>
+
+<details>
+<summary>fromHtml</summary>
+
+```typescript
+fromHtml(html: string, options?: PdfOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
+```
+</details>
+
+<details>
+<summary>fromMarkdown</summary>
+
+```typescript
+fromMarkdown(input: MarkdownOptions, options?: PdfOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
+
+type MarkdownOptions = {
+  markdown: string;
+  css?: string;
+  dark?: boolean;
+  padding?: number;
+}
+```
+</details>
+
+
+### Office to PDF
+
+<details>
+  <summary>Common Types</summary>
+  
+  ```typescript
+  type OfficeProperties = {
+    landscape?: boolean;
+    nativePageRanges?: {
+      from: number;
+      to: number;
+    };
+    exportFormFields?: boolean;
+    singlePageSheets?: boolean;
+    allowDuplicateFieldNames?: boolean;
+    exportBookmarks?: boolean;
+    exportBookmarksToPdfDestination?: boolean;
+    exportPlaceholders?: boolean;
+    exportNotes?: boolean;
+    exportNotesPages?: boolean;
+    exportOnlyNotesPages?: boolean;
+    exportNotesInMargin?: boolean;
+    convertOooTargetToPdfTarget?: boolean;
+    exportLinksRelativeFsys?: boolean;
+    exportHiddenSlides?: boolean;
+    skipEmptyPages?: boolean;
+    addOriginalDocumentAsStream?: boolean;
+  }
+
+  type OfficeToPdfOptions = {
+    properties?: OfficeProperties;
+    pdfUA?: boolean;
+    merge?: boolean;
+    metadata?: any;
+    losslessImageCompression?: boolean;
+    reduceImageResolution?: boolean;
+    quality?: number;
+    maxImageResolution?: 75 | 150 | 300 | 600 | 1200;
+  }
+  ```
+</details>
+
+<details>
+<summary>convert</summary>
+
+```typescript
+convert(files: PathLikeOrReadStream[], options?: OfficeToPdfOptions): {
+  json: () => Promise<ITask>;
+  buffer: () => Promise<ArrayBuffer>;
+}
+
+type PathLikeOrReadStream = string | FileInfo;
+
+type FileInfo = {
+  data: Buffer | ReadStream;
+  filename: string;
+}
+  
+```
+</details>

@@ -72,6 +72,7 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "@ajoelp/json-to-formdata": "^1.5.0",
     "@swc/core": "^1.6.5",
     "ofetch": "^1.3.4",
     "tsup": "^8.1.0",
