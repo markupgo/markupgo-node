@@ -689,3 +689,7 @@ type FileInfo = {
 
   <img src="https://markupgo.com/github/markupgo/markupgo-node/contributors?count=0&circleSize=32&circleRadius=32&center=true" width="100%" /> 
   
+  ### Contributors
+
+  <img src="https://markupgo.com/github/markupgo/markupgo-node/contributors?count=0&circleSize=32&circleRadius=32&center=true" width="100%" /> 
+  
